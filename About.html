@@ -1,0 +1,318 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>About Us - MedTech Rajahmundry</title>
+     <link rel="icon" href="https://res.cloudinary.com/dvzuuabfr/image/upload/v1755880353/Gemini_Generated_Image_679a9u679a9u679a_vx1rlm.png" type="image/jpeg">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
+
+    <style>
+        :root {
+            --primary-color: #0077B6;
+            --secondary-color: #00B4D8;
+            --dark-blue: #1c9272;
+            --light-bg: #162533;
+            --text-color: #333;
+            --card-shadow: 0 8px 24px rgba(0, 0, 0, 0.08);
+            --border-radius: 12px;
+            --font-family: 'Inter', sans-serif;
+            --transition-speed: 0.3s ease;
+
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: var(--font-family);
+            background-color: var(--light-bg);
+            color: var(--text-color);
+            line-height: 1.7;
+        }
+
+        /* ===== Navigation Bar ===== */
+        nav {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            background: rgb(15, 15, 26);
+            padding: 1rem 5%;
+            box-shadow: 0 2px 10px rgba(0,0,0,0.07);
+            position: sticky;
+            top: 0;
+            z-index: 1000;
+        }
+
+        nav .logo {
+            font-size: 1.6rem;
+            font-weight: 700;
+            color: var(--dark-blue);
+        }
+
+        nav ul {
+            list-style: none;
+            display: flex;
+            gap: 2rem;
+            margin: 0;
+        }
+
+        nav ul li a {
+            text-decoration: none;
+            color: var(--dark-blue);
+            font-weight: 500;
+            transition: color var(--transition-speed);
+        }
+
+        nav ul li a:hover {
+            color: var(--secondary-color);
+        }
+
+        nav .menu-toggle {
+            display: none;
+            font-size: 1.8rem;
+            color: var(--dark-blue);
+            cursor: pointer;
+        }
+
+        /* ===== Hero Header ===== */
+        .hero {
+            text-align: center;
+            color: white;
+            padding: 5rem 1rem;
+            background: linear-gradient(rgba(12, 95, 82, 0.7), rgba(15, 182, 124, 0.7)), url('https://images.unsplash.com/photo-1599384483486-faf38b3648f8?q=80&w=2070&auto=format&fit=crop'); /* Image of Godavari Bridge, Rajahmundry */
+            background-size: cover;
+            background-position: center;
+        }
+
+        .hero h1 {
+            font-size: 3rem;
+            font-weight: 700;
+            margin-bottom: 0.5rem;
+        }
+
+        .hero p {
+            font-size: 1.2rem;
+            font-weight: 300;
+            opacity: 0.9;
+        }
+        
+        /* ===== Main Content ===== */
+        main {
+            max-width: 1100px;
+            margin: 4rem auto;
+            padding: 0 2rem;
+        }
+
+        .about-section {
+            text-align: center;
+            margin-bottom: 4rem;
+        }
+
+        .about-section p {
+            font-size: 1.1rem;
+            max-width: 800px;
+            margin: 0 auto;
+            color: #cee2e3;
+        }
+        
+        h2 {
+            font-size: 2.5rem;
+            color: var(--dark-blue);
+            margin-bottom: 2rem;
+            text-align: center;
+        }
+
+        /* "What We Do" Cards */
+        .features-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 2rem;
+            margin-bottom: 4rem;
+        }
+
+        .feature-card {
+            background: rgb(255, 255, 255);
+            padding: 2rem;
+            border-radius: var(--border-radius);
+            box-shadow: var(--card-shadow);
+            text-align: center;
+            transition: transform var(--transition-speed), box-shadow var(--transition-speed);
+        }
+        
+        .feature-card:hover {
+            transform: translateY(-10px);
+            box-shadow: 0 16px 32px rgba(0,0,0,0.1);
+        }
+
+        .feature-card .icon {
+            font-size: 3rem;
+            color: var(--primary-color);
+            margin-bottom: 1rem;
+        }
+
+        .feature-card h3 {
+            font-size: 1.3rem;
+            color: var(--dark-blue);
+            margin-bottom: 0.5rem;
+        }
+        
+        .feature-card p {
+            color: #555;
+        }
+        
+        /* Vision Section */
+        .vision-section {
+            display: flex;
+            align-items: center;
+            gap: 3rem;
+            background: white;
+            padding: 3rem;
+            border-radius: var(--border-radius);
+            box-shadow: var(--card-shadow);
+        }
+
+        .vision-text {
+            flex: 1;
+        }
+        
+        .vision-text p {
+             font-size: 1.1rem;
+        }
+
+        .vision-image {
+            flex: 1;
+            max-width: 450px;
+        }
+        
+        .vision-image img {
+            width: 100%;
+            border-radius: var(--border-radius);
+        }
+
+        /* ===== Footer ===== */
+        footer {
+            text-align: center;
+            background: var(--dark-blue);
+            color: white;
+            padding: 1.5rem;
+            margin-top: 4rem;
+        }
+
+        /* ===== Responsive Design ===== */
+        @media (max-width: 768px) {
+            .hero h1 { font-size: 2.2rem; }
+            h2 { font-size: 2rem; }
+
+            nav ul {
+                display: none;
+                flex-direction: column;
+                background: white;
+                position: absolute;
+                top: 70px;
+                right: 5%;
+                width: 90%;
+                padding: 1rem;
+                border-radius: var(--border-radius);
+                box-shadow: var(--card-shadow);
+            }
+
+            nav ul.show {
+                display: flex;
+            }
+
+            nav .menu-toggle {
+                display: block;
+            }
+            
+            .vision-section {
+                flex-direction: column;
+                padding: 2rem;
+            }
+        }
+    </style>
+</head>
+<body>
+    
+    <nav id="navbar">
+        <div class="logo">MedTech RJY</div>
+        <ul id="nav-links">
+            <li><a href="Home.html">Home</a></li>
+            <li><a href="Medical_Status.html">Medical Status</a></li>
+            <li><a href="Technology.html">Technology</a></li>
+            <li><a href="RJY_Hospital.html">Services Map</a></li>
+            <li><a href="Appointment.html">Appointment</a></li>
+            <li><a href="index.html">Log Out</a></li>
+        </ul>
+        <div class="menu-toggle" id="menu-toggle">☰</div>
+    </nav>
+    
+    <header class="hero">
+        <h1>About Us</h1>
+        <p>MedTech Rajahmundry – Bridging Technology and Healthcare in the Cultural Capital</p>
+    </header>
+
+    <main>
+        <section class="about-section">
+            <p>
+                Welcome to <strong>MedTech Rajahmundry</strong>, a dedicated platform showcasing the evolution of healthcare and bringing vital medical information closer to the people of our city. Our mission is to bridge the gap between technology and healthcare, empowering citizens, healthcare workers, and researchers with reliable insights into Rajahmundry’s health infrastructure.
+            </p>
+        </section>
+
+        <section>
+            <h2>What We Do</h2>
+            <div class="features-grid">
+                <div class="feature-card">
+                    <div class="icon"><i class="fa-solid fa-timeline"></i></div>
+                    <h3>Healthcare Technology Evolution</h3>
+                    <p>Follow the journey of medical technology, from early manual tools to modern innovations like AI diagnostics, telemedicine, and genomics.</p>
+                </div>
+                <div class="feature-card">
+                    <div class="icon"><i class="fa-solid fa-map-location-dot"></i></div>
+                    <h3>Rajahmundry Healthcare Map</h3>
+                    <p>Explore an interactive city map with the locations, timings, and services of major hospitals, clinics, and medical institutions.</p>
+                </div>
+                <div class="feature-card">
+                    <div class="icon"><i class="fa-solid fa-newspaper"></i></div>
+                    <h3>Local Medical Updates</h3>
+                    <p>Stay informed with the latest health news relevant to Rajahmundry—from disease trends to vaccination drives and new facilities.</p>
+                </div>
+            </div>
+        </section>
+
+        <section class="vision-section">
+            <div class="vision-text">
+                <h2>Our Vision</h2>
+                <p>
+                    To establish Rajahmundry as a <strong>model smart-health city</strong>, where every citizen can easily access healthcare data, hospitals can connect seamlessly with patients, and technology fosters healthier lives for all.
+                </p>
+            </div>
+            <div class="vision-image">
+                <img src="https://images.unsplash.com/photo-1532938911079-1b06ac7ceec7?q=80&w=1932&auto=format&fit=crop" alt="Doctor showing a patient information on a tablet.">
+            </div>
+        </section>
+    </main>
+
+    <footer>
+        <p>&copy; 2025 MedTech Rajahmundry. All Rights Reserved.</p>
+    </footer>
+
+    <script>
+        document.addEventListener('DOMContentLoaded', () => {
+            const menuToggle = document.getElementById('menu-toggle');
+            const navLinks = document.getElementById('nav-links');
+
+            menuToggle.addEventListener('click', () => {
+                navLinks.classList.toggle('show');
+            });
+        });
+    </script>
+</body>
+</html>

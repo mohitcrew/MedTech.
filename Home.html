@@ -1,0 +1,461 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>MedTech & HealthTech Innovations</title>
+     <link rel="icon" href="https://res.cloudinary.com/dvzuuabfr/image/upload/v1755880353/Gemini_Generated_Image_679a9u679a9u679a_vx1rlm.png" type="image/jpeg">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600;700&display=swap" rel="stylesheet">
+
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
+
+    <style>
+        /* ===== Root Variables & Global Styles ===== */
+        :root {
+            --primary-color: #007BFF;
+            --secondary-color: #4A90E2;
+            --accent-color: #50E3C2;
+            --light-bg-color: #F8F9FA;
+            --light-card-bg: #FFFFFF;
+            --light-text-color: #343A40;
+            --light-muted-text: #6c757d;
+            --light-shadow: rgba(0, 0, 0, 0.08);
+
+            --dark-bg-color: #121828;
+            --dark-card-bg: #1E293B;
+            --dark-text-color: #E0E0E0;
+            --dark-muted-text: #9a9a9a;
+            --dark-shadow: rgba(0, 0, 0, 0.2);
+            
+            --border-radius: 12px;
+            --font-family: 'Inter', sans-serif;
+            --transition-speed: 0.3s;
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        html {
+            scroll-behavior: smooth;
+        }
+
+        body {
+            font-family: var(--font-family);
+            background-color: var(--light-bg-color);
+            color: var(--light-text-color);
+            line-height: 1.7;
+            transition: background-color var(--transition-speed), color var(--transition-speed);
+        }
+
+        body.dark-mode {
+            background-color: var(--dark-bg-color);
+            color: var(--dark-text-color);
+        }
+
+        /* ===== Navbar ===== */
+        nav {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 1rem 5%;
+            position: sticky;
+            top: 0;
+            z-index: 1000;
+            background: rgba(255, 255, 255, 0.7);
+            backdrop-filter: blur(10px);
+            -webkit-backdrop-filter: blur(10px);
+            border-bottom: 1px solid rgba(0,0,0,0.1);
+            transition: background var(--transition-speed);
+        }
+
+        body.dark-mode nav {
+            background: rgba(30, 41, 59, 0.7);
+            border-bottom: 1px solid rgba(255,255,255,0.1);
+        }
+
+        nav .logo {
+            font-size: 1.75rem;
+            font-weight: 700;
+            color: var(--primary-color);
+        }
+        
+        body.dark-mode nav .logo { color: var(--accent-color); }
+
+        nav ul {
+            list-style: none;
+            display: flex;
+            gap: 2rem;
+        }
+
+        nav ul li a {
+            text-decoration: none;
+            color: var(--light-text-color);
+            font-weight: 600;
+            transition: color var(--transition-speed);
+        }
+
+        body.dark-mode nav ul li a { color: var(--dark-text-color); }
+
+        nav ul li a:hover {
+            color: var(--primary-color);
+        }
+        
+        body.dark-mode nav ul li a:hover { color: var(--accent-color); }
+
+        .nav-right {
+            display: flex;
+            align-items: center;
+        }
+        
+        .menu-toggle { display: none; }
+
+        /* ===== Header / Hero Section ===== */
+        header {
+            text-align: center;
+            padding: 120px 20px;
+            min-height: 50vh;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            color: white;
+            background-image: linear-gradient(rgba(18, 24, 40, 0.7), rgba(18, 24, 40, 0.9)), url('https://images.unsplash.com/photo-1576091160550-2173dba999ef?q=80&w=2070&auto=format&fit=crop');
+            background-size: cover;
+            background-position: center;
+            background-attachment: fixed;
+        }
+
+        header h1 {
+            font-size: 3.5rem;
+            margin-bottom: 1rem;
+            font-weight: 700;
+            text-shadow: 0 2px 10px rgba(0,0,0,0.5);
+        }
+
+        header p {
+            font-size: 1.25rem;
+            max-width: 800px;
+            font-weight: 300;
+            color: var(--dark-muted-text);
+        }
+
+        /* ===== About Section ===== */
+        #about {
+            padding: 4rem 10%;
+            text-align: center;
+            background-color: var(--light-card-bg);
+        }
+
+        body.dark-mode #about { background-color: var(--dark-card-bg); }
+
+        #about h2 {
+            font-size: 2.5rem;
+            margin-bottom: 1.5rem;
+            color: var(--primary-color);
+        }
+        body.dark-mode #about h2 { color: var(--accent-color); }
+
+        #about p {
+            max-width: 900px;
+            margin: 0 auto;
+            color: var(--light-muted-text);
+        }
+        body.dark-mode #about p { color: var(--dark-muted-text); }
+
+
+        /* ===== Main Content Grid ===== */
+        main {
+            padding: 4rem 5%;
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(320px, 1fr));
+            gap: 2.5rem;
+        }
+
+        .card {
+            background-color: var(--light-card-bg);
+            border-radius: var(--border-radius);
+            box-shadow: 0 8px 32px var(--light-shadow);
+            overflow: hidden;
+            transition: transform var(--transition-speed) ease-in-out, box-shadow var(--transition-speed) ease-in-out;
+            opacity: 0;
+            transform: translateY(30px);
+        }
+
+        body.dark-mode .card {
+            background-color: var(--dark-card-bg);
+            box-shadow: 0 8px 32px var(--dark-shadow);
+        }
+
+        .card:hover {
+            transform: translateY(-10px);
+            box-shadow: 0 16px 40px var(--light-shadow);
+        }
+        
+        body.dark-mode .card:hover { box-shadow: 0 16px 40px var(--dark-shadow); }
+
+        .card.visible {
+            opacity: 1;
+            transform: translateY(0);
+        }
+        
+        .card-image {
+            width: 100%;
+            height: 220px;
+            object-fit: cover;
+        }
+        
+        .card-content {
+            padding: 2rem;
+        }
+
+        .card h2 {
+            color: var(--secondary-color);
+            margin-top: 0;
+            font-size: 1.75rem;
+            margin-bottom: 1.5rem;
+        }
+        
+        body.dark-mode .card h2 { color: var(--accent-color); }
+
+        .card ul {
+            list-style-type: none;
+        }
+
+        .card li {
+            padding: 10px 0;
+            margin-bottom: 10px;
+            display: flex;
+            align-items: center;
+            font-weight: 400;
+        }
+        
+        .card li i {
+            color: var(--primary-color);
+            font-size: 1.2rem;
+            margin-right: 15px;
+            width: 20px;
+            text-align: center;
+        }
+        
+        body.dark-mode .card li i { color: var(--accent-color); }
+
+        /* ===== Footer ===== */
+        footer {
+            text-align: center;
+            padding: 2rem 5%;
+            background-color: var(--dark-card-bg);
+            color: var(--dark-muted-text);
+            margin-top: 2rem;
+        }
+        
+        body.dark-mode footer { background-color: #111; }
+        
+        /* ===== Theme Button ===== */
+        #themeBtn {
+            width: 45px;
+            height: 45px;
+            border-radius: 50%;
+            border: none;
+            background-color: var(--secondary-color);
+            color: white;
+            font-size: 1.2rem;
+            cursor: pointer;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            transition: background-color var(--transition-speed), transform var(--transition-speed);
+            margin-left: 1rem;
+        }
+        
+        body.dark-mode #themeBtn { background-color: var(--accent-color); color: var(--dark-bg-color); }
+
+        #themeBtn:hover {
+            transform: scale(1.1) rotate(15deg);
+        }
+        
+        /* ===== Responsive Design ===== */
+        @media (max-width: 768px) {
+            header h1 { font-size: 2.5rem; }
+            header p { font-size: 1.1rem; }
+            
+            nav {
+                padding: 1rem 5%;
+            }
+
+            .menu-toggle {
+                display: block;
+                font-size: 1.5rem;
+                cursor: pointer;
+                z-index: 1001;
+            }
+            
+            nav ul {
+                display: none;
+                flex-direction: column;
+                position: absolute;
+                top: 80px;
+                right: 5%;
+                width: 90%;
+                background-color: var(--light-card-bg);
+                border-radius: var(--border-radius);
+                padding: 1.5rem;
+                box-shadow: 0 10px 30px var(--light-shadow);
+            }
+            
+            body.dark-mode nav ul {
+                background-color: var(--dark-card-bg);
+                box-shadow: 0 10px 30px var(--dark-shadow);
+            }
+
+            nav ul.show {
+                display: flex;
+            }
+        }
+    </style>
+</head>
+<body>
+    <nav>
+        <div class="logo">MedTech</div>
+        <div class="nav-right">
+            <ul id="navLinks">
+                <li><a href="Home.html">Home</a></li>
+                <li><a href="About.html">About</a></li>
+                <li><a href="Medical_Status.html">Medical Status</a></li>
+                <li><a href="Technology.html">Technology</a></li>
+                <li><a href="RJY_Hospital.html">Services Map</a></li>
+                <li><a href="Appointment.html">Appointment</a></li>
+                <li><a href="index.html">Log Out</a></li>
+            </ul>
+            <button id="themeBtn" aria-label="Toggle Theme">🌙</button>
+        </div>
+        <div class="menu-toggle" id="menuToggle">☰</div>
+    </nav>
+
+    <header id="home">
+        <h1>Pioneering the Future of Health</h1>
+        <p>Exploring the innovations in MedTech and HealthTech that are transforming patient care and shaping a healthier tomorrow.</p>
+    </header>
+
+    <section id="about">
+        <h2>About MedTech Innovations</h2>
+        <p>
+            We are dedicated to exploring and showcasing the latest breakthroughs in medical technology. From AI-driven diagnostics to patient-centric wearables, our mission is to provide clear, insightful analysis on the tools and technologies that are making healthcare more precise, accessible, and effective for everyone.
+        </p>
+    </section>
+
+    <main>
+        <section class="card" id="healthcare-delivery">
+            <img src="https://res.cloudinary.com/dvzuuabfr/image/upload/v1755874509/Screenshot_2025-08-22_192611_ngh8wt.png" alt="Robotic surgery arms in an operating room" class="card-image">
+            <div class="card-content">
+                <h2>Healthcare Delivery</h2>
+                <ul>
+                    <li><i class="fa-solid fa-laptop-medical"></i> Telemedicine & Virtual Care</li>
+                    <li><i class="fa-solid fa-brain"></i> AI-Powered Diagnostics</li>
+                    <li><i class="fa-solid fa-robot"></i> Robotic-Assisted Surgery</li>
+                    <li><i class="fa-solid fa-file-waveform"></i> Electronic Health Records (EHRs)</li>
+                </ul>
+            </div>
+        </section>
+
+        <section class="card" id="population-health">
+            <img src="https://images.unsplash.com/photo-1542744173-8e7e53415bb0?q=80&w=2070&auto=format&fit=crop" alt="Team analyzing health data on a screen" class="card-image">
+            <div class="card-content">
+                <h2>Population Health</h2>
+                <ul>
+                    <li><i class="fa-solid fa-house-medical-circle-check"></i> Remote Patient Monitoring (RPM)</li>
+                    <li><i class="fa-solid fa-chart-line"></i> Predictive Analytics & Data Insights</li>
+                    <li><i class="fa-solid fa-mobile-screen-button"></i> mHealth & Wellness Apps</li>
+                    <li><i class="fa-solid fa-users"></i> Community Health Platforms</li>
+                </ul>
+            </div>
+        </section>
+
+        <section class="card" id="health-technology">
+            <img src="https://res.cloudinary.com/dvzuuabfr/image/upload/v1755874507/Screenshot_2025-08-22_192714_ornfxd.png" alt="Smartwatch displaying a heart rate graph" class="card-image">
+            <div class="card-content">
+                <h2>Health Technology</h2>
+                <ul>
+                    <li><i class="fa-solid fa-watch"></i> Wearables & IoT Devices</li>
+                    <li><i class="fa-solid fa-pills"></i> Digital Therapeutics (DTx)</li>
+                    <li><i class="fa-solid fa-cube"></i> 3D Printing in Healthcare</li>
+                    <li><i class="fa-solid fa-link"></i> Blockchain for Secure Data</li>
+                </ul>
+            </div>
+        </section>
+    </main>
+
+    <footer>
+        <p>&copy; 2025 MedTech Innovations. All Rights Reserved.</p>
+    </footer>
+
+    <script>
+    document.addEventListener('DOMContentLoaded', () => {
+        
+        // --- CONSOLIDATED JAVASCRIPT LOGIC ---
+
+        // 1. Dark Mode Toggle
+        const themeBtn = document.getElementById('themeBtn');
+        const body = document.body;
+        
+        const applyTheme = (theme) => {
+            if (theme === 'dark') {
+                body.classList.add('dark-mode');
+                themeBtn.textContent = '☀️';
+            } else {
+                body.classList.remove('dark-mode');
+                themeBtn.textContent = '🌙';
+            }
+        };
+
+        const storedTheme = localStorage.getItem('theme');
+        const prefersDark = window.matchMedia('(prefers-color-scheme: dark)').matches;
+        
+        // Determine initial theme
+        if (storedTheme) {
+            applyTheme(storedTheme);
+        } else if (prefersDark) {
+            applyTheme('dark');
+        } else {
+            applyTheme('light');
+        }
+
+        themeBtn.addEventListener('click', () => {
+            const isDarkMode = body.classList.contains('dark-mode');
+            const newTheme = isDarkMode ? 'light' : 'dark';
+            localStorage.setItem('theme', newTheme);
+            applyTheme(newTheme);
+        });
+
+        // 2. Fade-in Animation for Cards
+        const cards = document.querySelectorAll('.card');
+        const observer = new IntersectionObserver((entries, observer) => {
+            entries.forEach((entry, index) => {
+                if (entry.isIntersecting) {
+                    // Stagger the animation
+                    setTimeout(() => {
+                        entry.target.classList.add('visible');
+                    }, index * 150);
+                    observer.unobserve(entry.target);
+                }
+            });
+        }, { threshold: 0.1 });
+
+        cards.forEach(card => observer.observe(card));
+
+        // 3. Mobile Menu Toggle
+        const menuToggle = document.getElementById('menuToggle');
+        const navLinks = document.getElementById('navLinks');
+        
+        menuToggle.addEventListener('click', () => {
+            navLinks.classList.toggle('show');
+        });
+
+    });
+    </script>
+</body>
+</html>

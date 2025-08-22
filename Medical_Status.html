@@ -1,0 +1,774 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Rajahmundry Public Health Dashboard</title>
+    <link rel="icon" href="https://res.cloudinary.com/dvzuuabfr/image/upload/v1755880353/Gemini_Generated_Image_679a9u679a9u679a_vx1rlm.png" type="image/jpeg">
+    <link rel="stylesheet" href="style.css">
+    <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@400;500;700&display=swap" rel="stylesheet">
+    
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    <style>
+        /* General & Typography */
+:root {
+    --primary-color: #0d9261; /* Blue */
+    --secondary-color: #616161; /* Dark Gray */
+    --accent-color: #4CAF50; /* Green */
+    --background-color: #F5F5F5; /* Light Gray */
+    --card-background: #FFFFFF;
+    --border-color: #E0E0E0;
+    --shadow-color: rgba(0, 0, 0, 0.1);
+    --font-family: 'Roboto', sans-serif;
+}
+
+body {
+    font-family: var(--font-family);
+    background-color: var(--background-color);
+    color: var(--secondary-color);
+    line-height: 1.6;
+    margin: 0;
+    padding: 0;
+}
+
+.container {
+    max-width: 1200px;
+    margin: 20px auto;
+    padding: 0 15px;
+}
+
+/* Header */
+.main-header {
+    background-color: var(--primary-color);
+    color: white;
+    text-align: center;
+    padding: 40px 20px;
+    box-shadow: 0 4px 8px var(--shadow-color);
+}
+
+.main-header h1 {
+    font-size: 2.5em;
+    margin: 0;
+    font-weight: 700;
+}
+
+.main-header p {
+    font-size: 1em;
+    font-weight: 400;
+    opacity: 0.8;
+}
+
+/* Sections & Cards */
+.section {
+    margin-bottom: 40px;
+}
+
+.card {
+    background-color: var(--card-background);
+    padding: 30px;
+    border-radius: 12px;
+    box-shadow: 0 4px 12px var(--shadow-color);
+    transition: transform 0.3s ease, box-shadow 0.3s ease;
+}
+
+.card:hover {
+    transform: translateY(-5px);
+    box-shadow: 0 8px 16px rgba(0, 0, 0, 0.15);
+}
+
+.section-title {
+    font-size: 2em;
+    color: var(--primary-color);
+    border-bottom: 2px solid var(--accent-color);
+    padding-bottom: 10px;
+    margin-top: 0;
+}
+
+.section-subtitle {
+    font-style: italic;
+    color: var(--secondary-color);
+    margin-bottom: 20px;
+}
+
+/* Table Styles */
+.table-container {
+    overflow-x: auto;
+}
+
+table {
+    width: 100%;
+    border-collapse: collapse;
+    margin: 20px 0;
+    background-color: var(--card-background);
+}
+
+th, td {
+    padding: 12px 15px;
+    text-align: left;
+    border-bottom: 1px solid var(--border-color);
+}
+
+th {
+    background-color: var(--primary-color);
+    color: white;
+    font-weight: 500;
+}
+
+tr:nth-child(even) {
+    background-color: #F8F8F8;
+}
+
+tr:hover {
+    background-color: #EFEFEF;
+}
+
+.note {
+    font-size: 0.9em;
+    font-style: italic;
+    color: var(--secondary-color);
+    margin-top: 15px;
+}
+
+/* List Styles */
+ul {
+    list-style: none;
+    padding: 0;
+}
+
+li {
+    background-color: #F9F9F9;
+    padding: 10px 15px;
+    margin-bottom: 8px;
+    border-left: 4px solid var(--accent-color);
+    border-radius: 4px;
+    transition: background-color 0.2s ease;
+}
+
+li:hover {
+    background-color: #F0F0F0;
+}
+
+.highlight {
+    font-weight: 500;
+    color: var(--primary-color);
+}
+
+/* Flexbox & Grid Layouts */
+.institution-list, .disease-container, .insights-container, .report-list, .ranking-container {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 20px;
+}
+
+.institution-item, .disease-card, .insight-item, .report-item, .ranking-item {
+    flex: 1 1 calc(33.333% - 20px);
+}
+
+.disease-card {
+    background-color: #F0F8FF;
+    border: 1px solid #B0D9FF;
+    border-radius: 8px;
+    padding: 20px;
+    transition: transform 0.3s ease, box-shadow 0.3s ease;
+}
+
+.disease-card:hover {
+    transform: translateY(-5px);
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+}
+
+.disease-card h4 {
+    color: var(--primary-color);
+    margin-top: 0;
+    font-weight: 500;
+}
+
+.data-point {
+    font-weight: 500;
+    color: var(--primary-color);
+}
+
+.challenge, .improvement {
+    font-weight: 500;
+    color: var(--accent-color);
+}
+
+/* STYLES FOR WHO REPORTS SECTION */
+.report-item {
+    background-color: var(--card-background);
+    border: 1px solid var(--border-color);
+    padding: 20px;
+    border-radius: 8px;
+}
+
+.report-item h3 {
+    margin-top: 0;
+    color: var(--primary-color);
+}
+
+.expand-btn {
+    background-color: var(--accent-color);
+    color: white;
+    border: none;
+    padding: 8px 16px;
+    border-radius: 50px;
+    cursor: pointer;
+    margin-top: 10px;
+    transition: background-color 0.3s ease;
+}
+
+.expand-btn:hover {
+    background-color: #388E3C;
+}
+
+.case-list {
+    margin-top: 15px;
+    padding-left: 20px;
+}
+
+.case-list.hidden {
+    display: none;
+}
+
+.case-list li {
+    background-color: #FAFAFA;
+    border-left-color: #FFC107; /* Orange for emphasis */
+}
+
+/* STYLES FOR DISEASE RANKING SECTION */
+.ranking-item {
+    background-color: var(--card-background);
+    padding: 15px 20px;
+    border-radius: 8px;
+    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.05);
+    display: flex;
+    align-items: center;
+    transition: transform 0.3s ease;
+}
+
+.ranking-item:hover {
+    transform: scale(1.03);
+}
+
+.rank-number {
+    font-size: 2em;
+    font-weight: 700;
+    color: var(--primary-color);
+    margin-right: 15px;
+}
+
+.disease-name {
+    font-size: 1.2em;
+    font-weight: 500;
+    color: var(--secondary-color);
+}
+
+/* New Chart Container for Responsiveness */
+.chart-container {
+    width: 100%;
+    max-width: 800px;
+    margin: 20px auto;
+    background-color: #fff;
+    padding: 20px;
+    border-radius: 8px;
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.08);
+}
+
+/* Footer */
+.main-footer {
+    text-align: center;
+    padding: 20px;
+    background-color: var(--primary-color);
+    color: white;
+    margin-top: 40px;
+}
+
+/* Responsive Design */
+@media (max-width: 768px) {
+    .main-header h1 {
+        font-size: 1.8em;
+    }
+
+    .section-title {
+        font-size: 1.5em;
+    }
+
+    .institution-item, .disease-card, .insight-item, .report-item, .ranking-item {
+        flex: 1 1 100%;
+    }
+}
+
+/* Navbar */
+nav {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  background: #f4f7f8;  /* Solid blue */
+  padding: 0.8rem 5%;
+  box-shadow: 0 2px 6px rgba(0,0,0,0.1);
+  position: sticky;
+  top: 0;
+  z-index: 1000;
+}
+
+nav .logo {
+  font-size: 1.5rem;
+  font-weight: bold;
+  color: #0c9263; /* White logo text */
+}
+
+nav ul {
+  list-style: none;
+  display: flex;
+  gap: 1.5rem;
+  margin: 0;
+  padding: 0;
+}
+
+nav ul li a {
+  text-decoration: none;
+  color: #0a65ed;
+  font-weight: 500;
+  transition: color 0.3s;
+}
+
+nav ul li a:hover {
+  color: #ffd60a; /* Yellow hover effect */
+}
+
+/* Mobile Menu */
+nav .menu-toggle {
+  display: none;
+  font-size: 1.8rem;
+  color: #fff;
+  cursor: pointer;
+}
+
+@media (max-width: 768px) {
+  nav ul {
+    display: none;
+    flex-direction: column;
+    background: #0077b6;
+    position: absolute;
+    top: 60px;
+    right: 5%;
+    width: 200px;
+    padding: 1rem;
+    border-radius: 8px;
+  }
+
+  nav ul.show {
+    display: flex;
+  }
+
+  nav .menu-toggle {
+    display: block;
+  }
+}
+
+/*Strategic card*/
+    .insight-card {
+      background: #fff;
+      border-radius: 12px;
+      padding: 2rem;
+      box-shadow: 0 6px 16px rgba(0,0,0,0.1);
+      max-width: 800px;
+      margin: auto;
+    }
+    .insight-card h2 {
+      font-size: 1.5rem;
+      margin-bottom: 1.5rem;
+      display: flex;
+      align-items: center;
+      color: #1b5e20;
+    }
+    .insight-card h2::before {
+      content: "💡";
+      margin-right: 8px;
+    }
+    .insight-flex {
+      display: flex;
+      justify-content: space-between;
+      gap: 2rem;
+    }
+    .insight-section { flex: 1; }
+    .insight-section h3 { margin-bottom: 1rem; color: #333; }
+    .insight-section ul { list-style: none; padding: 0; }
+    .insight-section ul li {
+      margin-bottom: 1rem;
+      display: flex;
+      align-items: center;
+      font-size: 1rem;
+    }
+    .challenges li::before {
+      content: "⚠️";
+      margin-right: 8px;
+      color: #d32f2f;
+    }
+    .improvements li::before {
+      content: "✔️";
+      margin-right: 8px;
+      color: #2e7d32;
+    }
+
+
+    </style>
+</head>
+<body>
+    <nav>
+    <div class="logo">MedTech</div>
+    <div class="menu-toggle">☰</div>
+    <ul>
+      <li><a href="Home.html">Home</a></li>
+      <li><a href="About.html">About</a></li>
+      <li><a href="RJY_Hospital.html">Services Map</a></li>
+      <li><a href="Appointment.html">Appointment</a></li>
+      <li><a href="Technology.html">Technology</a></li>
+      <li><a href="index.html">Log Out</a></li>
+    </ul>
+  </nav>
+    <header class="main-header">
+        <h1>Rajahmundry Public Health Dashboard</h1>
+        <p>A data-driven analysis of health and population trends (2010-2025)</p>
+    </header>
+
+    <main class="container">
+        
+        <section class="card section" id="population-trends">
+            <h2 class="section-title">Population Trends</h2>
+            <p class="section-subtitle">Growth and projections over the last decade.</p>
+            <div class="table-container">
+                <table>
+                    <thead>
+                        <tr>
+                            <th>Year</th>
+                            <th>Population</th>
+                            <th>Growth Rate (%)</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr><td>2011</td><td>341,831</td><td>-</td></tr>
+                        <tr><td>2015</td><td>375,000</td><td>~2.2</td></tr>
+                        <tr><td>2020</td><td>410,000</td><td>~1.8</td></tr>
+                        <tr><td>2025 (Est.)</td><td>445,000</td><td>~1.6</td></tr>
+                    </tbody>
+                </table>
+            </div>
+            <p class="note">Source: Census data and population estimates. The population of the urban agglomeration is estimated to be higher.</p>
+            <div class="chart-container">
+                <canvas id="populationChart"></canvas>
+            </div>
+        </section>
+
+        <section class="card section" id="healthcare-infrastructure">
+            <h2 class="section-title">Healthcare Infrastructure</h2>
+            <p class="section-subtitle">Government and private institutions shaping the city's health landscape.</p>
+            <div class="institution-list">
+                <div class="institution-item">
+                    <h3>Government & Public Institutions</h3>
+                    <ul>
+                        <li><span class="highlight">Government General Hospital (GGH):</span> The primary public hospital, serving a large population with general and specialized care.</li>
+                        <li><span class="highlight">Rajahmundry Medical College:</span> A key institution for medical education and research, with a teaching hospital.</li>
+                    </ul>
+                </div>
+                <div class="institution-item">
+                    <h3>Private & Super-Specialty Hospitals</h3>
+                    <ul>
+                        <li><span class="highlight">Apollo Hospitals:</span> A multi-specialty hospital providing advanced care in cardiology, oncology, and more.</li>
+                        <li><span class="highlight">Care Hospitals:</span> Known for its specialized services and modern facilities.</li>
+                        <li><span class="highlight">Medicover Hospitals:</span> Offers comprehensive healthcare services, including critical care.</li>
+                    </ul>
+                </div>
+                <div class="institution-item">
+                    <h3>Specialty Care Centers</h3>
+                    <ul>
+                        <li><span class="highlight">Vasan Eye Care & L.V. Prasad Eye Institute:</span> Leading centers for ophthalmology, serving the entire region.</li>
+                        <li><span class="highlight">Rainbow Children's Hospital:</span> A dedicated institution for pediatric and maternal care.</li>
+                        <li><span class="highlight">Sri Sathya Sai Orthopaedic & Trauma Care:</span> A major center for orthopedic and trauma-related services.</li>
+                    </ul>
+                </div>
+            </div>
+        </section>
+        
+        <section class="card section" id="disease-burden">
+            <h2 class="section-title">Disease Burden & Trends</h2>
+            <p class="section-subtitle">A snapshot of prevalent health challenges in the city.</p>
+            <div class="disease-container">
+                <div class="disease-card">
+                    <h4>Chronic Diseases</h4>
+                    <p>High prevalence of <span class="data-point">Diabetes, Hypertension,</span> and <span class="data-point">Cardiovascular Diseases</span> due to lifestyle changes.</p>
+                </div>
+                <div class="disease-card">
+                    <h4>Infectious Diseases</h4>
+                    <p>Notable cases of <span class="data-point">Dengue, Malaria,</span> and seasonal viral fevers, often linked to sanitation and urban development.</p>
+                </div>
+                <div class="disease-card">
+                    <h4>Nutritional & Maternal Health</h4>
+                    <p>Prevalence of <span class="data-point">anemia</span> and <span class="data-point">malnutrition,</span> especially among women and children in lower-income areas. High maternal and infant care demand.</p>
+                </div>
+                <div class="disease-card">
+                    <h4>Mental Health</h4>
+                    <p>Increasing recognition of mental health issues, with a growing need for counseling and support services for <span class="data-point">stress, anxiety,</span> and <span class="data-point">depression.</span></p>
+                </div>
+            </div>
+        </section>
+
+        <section class="card section" id="who-reports">
+            <h2 class="section-title">WHO Reports & Case List</h2>
+            <p class="section-subtitle">Data from public health reports and case tracking.</p>
+            <div class="report-list">
+                <div class="report-item">
+                    <h3>Report on Dengue Outbreaks (2022)</h3>
+                    <p>WHO report highlighted a significant spike in Dengue cases due to post-monsoon water stagnation. Recommendations included improved vector control and community awareness campaigns.</p>
+                    <button class="expand-btn">View Cases</button>
+                    <ul class="case-list hidden">
+                        <li><span>Case #2022-001:</span> A 35-year-old male with severe symptoms.</li>
+                        <li><span>Case #2022-002:</span> A 12-year-old child from a low-lying area.</li>
+                        <li><span>Case #2022-003:</span> A 50-year-old female with comorbidities.</li>
+                    </ul>
+                </div>
+                <div class="report-item">
+                    <h3>Report on Malnutrition (2020-2021)</h3>
+                    <p>A joint report on nutritional deficiencies indicated a high prevalence of anemia among adolescent girls and Vitamin D deficiency in urban children. The report suggested fortifying staple foods and educational programs.</p>
+                    <button class="expand-btn">View Cases</button>
+                    <ul class="case-list hidden">
+                        <li><span>Case #2021-015:</span> A 16-year-old with chronic iron-deficiency anemia.</li>
+                        <li><span>Case #2021-020:</span> A 7-year-old with signs of stunted growth.</li>
+                    </ul>
+                </div>
+            </div>
+        </section>
+
+        <section class="card section" id="disease-ranking">
+            <h2 class="section-title">Top 5 Disease Burden Ranking (High to Low)</h2>
+            <p class="section-subtitle">Based on prevalence and impact on public health.</p>
+            <div class="chart-container">
+                <canvas id="diseaseRankingChart"></canvas>
+            </div>
+        </section>
+
+        <section class="card section" id="analysis-insights">
+            <h2 class="section-title">Analysis & Insights</h2>
+            <p class="section-subtitle">Key public health challenges and areas for improvement.</p>
+            <div class="insights-container">
+                <div class="insight-item">
+                    <h3>Public Health Challenges</h3>
+                    <ul>
+                        <li><span class="challenge">Sanitation & Waste Management:</span> Directly impacts infectious disease spread.</li>
+                        <li><span class="challenge">Access to Care:</span> Disparities exist between urban centers and surrounding areas.</li>
+                        <li><span class="challenge">Non-Communicable Diseases (NCDs):</span> A rising burden due to changing lifestyles.</li>
+                    </ul>
+                </div>
+                <div class="insight-item">
+                    <h3>Areas for Improvement</h3>
+                    <ul>
+                        <li><span class="improvement">Preventive Care & Health Education:</span> Focus on lifestyle management and early detection.</li>
+                        <li><span class="improvement">Digital Health Integration:</span> Utilizing telemedicine and EHRs for better data management.</li>
+                        <li><span class="improvement">Mental Health Services:</span> Expanding access to professional psychological support.</li>
+                    </ul>
+                </div>
+            </div>
+        </section>
+        
+        <section class="section" id="strategic">
+      <div class="insight-card">
+        <h2>Strategic Insights</h2>
+        <div class="insight-flex">
+          <div class="insight-section challenges">
+            <h3>Public Health Challenges</h3>
+            <ul>
+              <li>Sanitation & Waste Management</li>
+              <li>Access to Care Disparities</li>
+              <li>Rising Non-Communicable Diseases</li>
+            </ul>
+          </div>
+          <div class="insight-section improvements">
+            <h3>Areas for Improvement</h3>
+            <ul>
+              <li>Preventive Care & Health Education</li>
+              <li>Digital Health Integration (EHRs)</li>
+              <li>Expanding Mental Health Services</li>
+            </ul>
+          </div>
+        </div>
+      </div>
+    </section>
+    </main>
+
+    <footer class="main-footer">
+        <p>&copy; 2024 Rajahmundry Health Data Project</p>
+    </footer>
+
+    <script>
+        document.addEventListener('DOMContentLoaded', () => {
+
+    // --- Smooth Scroll for anchor links ---
+    document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+        anchor.addEventListener('click', function (e) {
+            e.preventDefault();
+            document.querySelector(this.getAttribute('href')).scrollIntoView({
+                behavior: 'smooth'
+            });
+        });
+    });
+
+    // --- Card Fade-in Animation on Scroll ---
+    const cards = document.querySelectorAll('.card');
+
+    const observerOptions = {
+        root: null, // viewport
+        rootMargin: '0px',
+        threshold: 0.1 // Trigger when 10% of the element is visible
+    };
+
+    const observer = new IntersectionObserver((entries, observer) => {
+        entries.forEach(entry => {
+            if (entry.isIntersecting) {
+                entry.target.style.opacity = '1';
+                entry.target.style.transform = 'translateY(0)';
+                observer.unobserve(entry.target);
+            }
+        });
+    }, observerOptions);
+
+    cards.forEach(card => {
+        card.style.opacity = '0'; // Initial state for animation
+        card.style.transform = 'translateY(20px)';
+        card.style.transition = 'opacity 0.6s ease-out, transform 0.6s ease-out';
+        observer.observe(card);
+    });
+
+    // --- Toggle collapsible case lists ---
+    const expandButtons = document.querySelectorAll('.expand-btn');
+
+    expandButtons.forEach(button => {
+        button.addEventListener('click', () => {
+            const caseList = button.nextElementSibling;
+            const isHidden = caseList.classList.contains('hidden');
+
+            // Hide all other open lists
+            document.querySelectorAll('.case-list').forEach(list => {
+                if (list !== caseList) {
+                    list.classList.add('hidden');
+                    list.previousElementSibling.textContent = 'View Cases';
+                }
+            });
+
+            // Toggle the clicked list
+            if (isHidden) {
+                caseList.classList.remove('hidden');
+                button.textContent = 'Hide Cases';
+            } else {
+                caseList.classList.add('hidden');
+                button.textContent = 'View Cases';
+            }
+        });
+    });
+
+    // --- Population Chart (Line Chart) ---
+    const populationCtx = document.getElementById('populationChart').getContext('2d');
+    const populationData = {
+        labels: ['2011', '2015', '2020', '2025 (Est.)'],
+        datasets: [{
+            label: 'Population',
+            data: [341831, 375000, 410000, 445000],
+            borderColor: 'rgb(25, 118, 210)',
+            backgroundColor: 'rgba(25, 118, 210, 0.2)',
+            fill: true,
+            tension: 0.4
+        }]
+    };
+
+    new Chart(populationCtx, {
+        type: 'line',
+        data: populationData,
+        options: {
+            responsive: true,
+            plugins: {
+                title: {
+                    display: true,
+                    text: 'Rajahmundry Population Growth (2011-2025)',
+                    font: { size: 18 }
+                }
+            },
+            scales: {
+                y: {
+                    beginAtZero: false,
+                    title: {
+                        display: true,
+                        text: 'Population'
+                    }
+                },
+                x: {
+                    title: {
+                        display: true,
+                        text: 'Year'
+                    }
+                }
+            }
+        }
+    });
+
+    // --- Disease Ranking Chart (Bar Chart) ---
+    const diseaseCtx = document.getElementById('diseaseRankingChart').getContext('2d');
+    const diseaseData = {
+        labels: ['Hypertension', 'Diabetes', 'Viral Fevers', 'Anemia', 'Cardiovascular Diseases'],
+        datasets: [{
+            label: 'Prevalence Ranking',
+            data: [5, 4, 3, 2, 1], // Lower number means higher rank
+            backgroundColor: [
+                'rgba(255, 99, 132, 0.6)',
+                'rgba(255, 159, 64, 0.6)',
+                'rgba(255, 205, 86, 0.6)',
+                'rgba(75, 192, 192, 0.6)',
+                'rgba(54, 162, 235, 0.6)'
+            ],
+            borderColor: [
+                'rgb(255, 99, 132)',
+                'rgb(255, 159, 64)',
+                'rgb(255, 205, 86)',
+                'rgb(75, 192, 192)',
+                'rgb(54, 162, 235)'
+            ],
+            borderWidth: 1
+        }]
+    };
+
+    new Chart(diseaseCtx, {
+        type: 'bar',
+        data: diseaseData,
+        options: {
+            responsive: true,
+            indexAxis: 'y', // This makes it a horizontal bar chart
+            plugins: {
+                legend: { display: false },
+                title: {
+                    display: true,
+                    text: 'Disease Burden Ranking',
+                    font: { size: 18 }
+                }
+            },
+            scales: {
+                x: {
+                    beginAtZero: true,
+                    title: {
+                        display: true,
+                        text: 'Impact Score (Lower = Higher Rank)'
+                    },
+                    max: 6
+                },
+                y: {
+                    title: {
+                        display: true,
+                        text: 'Disease'
+                    }
+                }
+            }
+        }
+    });
+});
+    </script>
+
+
+</body>
+</html>

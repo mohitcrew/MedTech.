@@ -1,0 +1,339 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Login - MedTech Rajahmundry</title>
+     <link rel="icon" href="https://res.cloudinary.com/dvzuuabfr/image/upload/v1755880353/Gemini_Generated_Image_679a9u679a9u679a_vx1rlm.png" type="image/jpeg">
+    <!-- Google Fonts: Roboto -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@300;400;500;700&display=swap" rel="stylesheet">
+    
+    <!-- Font Awesome for Icons -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
+    
+    <style>
+        :root {
+            --primary-teal: #00796B; /* A professional, medical teal */
+            --primary-teal-dark: #004D40;
+            --bg-main: #E0F2F1; /* Light teal background */
+            --text-primary: #212121;
+            --text-secondary: #616161;
+            --border-color: #B2DFDB;
+            --shadow-light: rgba(0, 77, 64, 0.1);
+            --accent-red: #E53935;
+            --font-family: 'Roboto', sans-serif;
+            --border-radius: 16px;
+            --transition-speed: 0.4s ease;
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: var(--font-family);
+            color: var(--text-secondary);
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            min-height: 100vh;
+            overflow: hidden; /* Hide scrollbars from particle canvas */
+        }
+        
+        #particles-js {
+            position: absolute;
+            width: 100%;
+            height: 100%;
+            background-color: var(--bg-main);
+            background-image: linear-gradient(135deg, #E0F2F1 0%, #B2DFDB 100%);
+            z-index: -1;
+        }
+
+        .login-container {
+            width: 100%;
+            max-width: 420px;
+            padding: 2rem;
+            z-index: 1;
+        }
+
+        .login-card {
+            background: rgba(255, 255, 255, 0.6);
+            backdrop-filter: blur(15px);
+            -webkit-backdrop-filter: blur(15px);
+            border: 1px solid rgba(255, 255, 255, 0.2);
+            padding: 2.5rem;
+            border-radius: var(--border-radius);
+            box-shadow: 0 10px 30px var(--shadow-light);
+            text-align: center;
+            opacity: 0;
+            transform: translateY(20px);
+            animation: fadeIn 0.6s ease-out forwards;
+        }
+        
+        .login-card.shake {
+            animation: shake 0.5s;
+        }
+
+        @keyframes fadeIn {
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+        
+        @keyframes shake {
+            0%, 100% { transform: translateX(0); }
+            10%, 30%, 50%, 70%, 90% { transform: translateX(-8px); }
+            20%, 40%, 60%, 80% { transform: translateX(8px); }
+        }
+
+        .logo {
+            font-size: 2rem;
+            font-weight: 700;
+            color: var(--primary-teal);
+            margin-bottom: 1rem;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            gap: 10px;
+        }
+
+        .login-card h2 {
+            color: var(--text-primary);
+            font-weight: 500;
+            margin-bottom: 0.5rem;
+        }
+
+        .login-card p {
+            margin-bottom: 2rem;
+            font-size: 0.95rem;
+        }
+
+        .input-group {
+            position: relative;
+            margin-bottom: 1.5rem;
+        }
+
+        .input-field {
+            width: 100%;
+            padding: 14px 14px 14px 45px;
+            border: 1px solid var(--border-color);
+            border-radius: 10px;
+            font-size: 1rem;
+            font-family: var(--font-family);
+            background-color: rgba(255, 255, 255, 0.5);
+            transition: border-color var(--transition-speed), box-shadow var(--transition-speed);
+        }
+
+        .input-field:focus {
+            outline: none;
+            border-color: var(--primary-teal);
+            box-shadow: 0 0 0 3px rgba(0, 121, 107, 0.2);
+        }
+
+        .input-group .icon {
+            position: absolute;
+            left: 15px;
+            top: 50%;
+            transform: translateY(-50%);
+            color: var(--text-secondary);
+            opacity: 0.6;
+            transition: color var(--transition-speed);
+        }
+        
+        .input-field:focus + .icon {
+            color: var(--primary-teal);
+        }
+        
+        .password-toggle-icon {
+            position: absolute;
+            right: 15px;
+            top: 50%;
+            transform: translateY(-50%);
+            color: var(--text-secondary);
+            cursor: pointer;
+        }
+
+        .login-button {
+            width: 100%;
+            padding: 15px;
+            background: linear-gradient(45deg, var(--primary-teal), #009688);
+            color: white;
+            border: none;
+            border-radius: 10px;
+            font-size: 1rem;
+            font-weight: 500;
+            cursor: pointer;
+            transition: all var(--transition-speed);
+            position: relative;
+            overflow: hidden;
+        }
+
+        .login-button:hover {
+            box-shadow: 0 4px 15px rgba(0, 121, 107, 0.4);
+            transform: translateY(-3px);
+        }
+        
+        .login-button:disabled {
+            background: #B2DFDB;
+            cursor: not-allowed;
+        }
+        
+        .spinner {
+            border: 2px solid rgba(255, 255, 255, 0.3);
+            border-radius: 50%;
+            border-top: 2px solid #fff;
+            width: 20px;
+            height: 20px;
+            animation: spin 1s linear infinite;
+            display: none; /* Hidden by default */
+            margin: 0 auto;
+        }
+        
+        .login-button.loading .button-text {
+            display: none;
+        }
+        
+        .login-button.loading .spinner {
+            display: block;
+        }
+
+        @keyframes spin {
+            0% { transform: rotate(0deg); }
+            100% { transform: rotate(360deg); }
+        }
+        
+        .error-message {
+            background-color: #FFEBEE;
+            color: var(--accent-red);
+            padding: 12px;
+            border-radius: 8px;
+            margin-top: 1.5rem;
+            font-size: 0.9rem;
+            font-weight: 500;
+            display: none; /* Hidden by default */
+        }
+        
+        .footer-text {
+            margin-top: 2rem;
+            font-size: 0.85rem;
+            color: var(--text-primary);
+            text-align: center;
+        }
+    </style>
+</head>
+<body>
+    <div id="particles-js"></div>
+
+    <div class="login-container">
+        <div class="login-card" id="loginCard">
+            <div class="logo"><i class="fa-solid fa-heart-pulse"></i> MedTech</div>
+            <h2>Welcome Back</h2>
+            <p>Securely access your healthcare dashboard.</p>
+            
+            <form id="loginForm">
+                <div class="input-group">
+                    <i class="fa-solid fa-user icon"></i>
+                    <input type="text" name="username" class="input-field" placeholder="Username" required>
+                </div>
+                <div class="input-group">
+                    <i class="fa-solid fa-lock icon"></i>
+                    <input type="password" name="password" id="password" class="input-field" placeholder="Password" required>
+                    <i class="fa-solid fa-eye password-toggle-icon" id="passwordToggle"></i>
+                </div>
+                <button type="submit" class="login-button" id="loginButton">
+                    <span class="button-text">Login</span>
+                    <div class="spinner"></div>
+                </button>
+                
+                <div class="error-message" id="error-message">
+                    <!-- Error content will be set by JavaScript -->
+                </div>
+            </form>
+        </div>
+        <p class="footer-text">&copy; 2025 MedTech Rajahmundry. All Rights Reserved.</p>
+    </div>
+
+    <!-- Particles.js CDN -->
+    <script src="https://cdn.jsdelivr.net/particles.js/2.0.0/particles.min.js"></script>
+
+    <script>
+      // --- Initialize Particles.js ---
+      particlesJS("particles-js", {
+        "particles": {
+          "number": { "value": 80, "density": { "enable": true, "value_area": 800 } },
+          "color": { "value": "#00796b" },
+          "shape": { "type": "circle" },
+          "opacity": { "value": 0.5, "random": false },
+          "size": { "value": 3, "random": true },
+          "line_linked": { "enable": true, "distance": 150, "color": "#00796b", "opacity": 0.4, "width": 1 },
+          "move": { "enable": true, "speed": 2, "direction": "none", "random": false, "straight": false, "out_mode": "out" }
+        },
+        "interactivity": {
+          "detect_on": "canvas",
+          "events": { "onhover": { "enable": true, "mode": "repulse" }, "onclick": { "enable": true, "mode": "push" } },
+          "modes": { "repulse": { "distance": 100, "duration": 0.4 }, "push": { "particles_nb": 4 } }
+        },
+        "retina_detect": true
+      });
+
+      // --- Login Form Logic ---
+      document.addEventListener('DOMContentLoaded', () => {
+        const loginForm = document.getElementById('loginForm');
+        const errorMessage = document.getElementById('error-message');
+        const passwordField = document.getElementById('password');
+        const passwordToggle = document.getElementById('passwordToggle');
+        const loginButton = document.getElementById('loginButton');
+        const loginCard = document.getElementById('loginCard');
+
+        // Password visibility toggle
+        passwordToggle.addEventListener('click', () => {
+            const type = passwordField.getAttribute('type') === 'password' ? 'text' : 'password';
+            passwordField.setAttribute('type', type);
+            passwordToggle.classList.toggle('fa-eye');
+            passwordToggle.classList.toggle('fa-eye-slash');
+        });
+
+        loginForm.addEventListener('submit', function(event) {
+            event.preventDefault();
+            
+            const username = document.querySelector('input[name="username"]').value.trim();
+            const password = document.querySelector('input[name="password"]').value.trim();
+            
+            // Clear previous errors
+            errorMessage.style.display = 'none';
+            loginCard.classList.remove('shake');
+
+            // Show loading spinner
+            loginButton.classList.add('loading');
+            loginButton.disabled = true;
+
+            // Simulate a network request
+            setTimeout(() => {
+                // Hardcoded users for validation
+                if ((username === 'Mohit' && password === '199189') || (username === 'Rohitha' && password === '2409') || (username === 'Mohit' && password === 'Akhi') || (username === 'Mohit' && password === 'Prani') || (username === '' && password === 'Prani') ) {
+                    localStorage.setItem("userType", "admin");
+                    localStorage.setItem("username", username);
+                    window.location.href = 'Home.html'; 
+                } 
+
+                else {
+                    loginButton.classList.remove('loading');
+                    loginButton.disabled = false;
+                    
+                    // Show error
+                    errorMessage.textContent = 'Invalid username or password';
+                    errorMessage.style.display = 'block';
+                    loginCard.classList.add('shake');
+                }
+            }, 1000); // 1-second delay
+        });
+      });
+    </script>
+
+</body>
+</html>

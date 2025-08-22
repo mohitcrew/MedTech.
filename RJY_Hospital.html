@@ -1,0 +1,48 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Rajahmundry Hospitals Map</title>
+     <link rel="icon" href="https://res.cloudinary.com/dvzuuabfr/image/upload/v1755880353/Gemini_Generated_Image_679a9u679a9u679a_vx1rlm.png" type="image/jpeg">
+    <link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css" integrity="sha256-p4NxAoJBhIIN+hmNHrzRCf9tD/miZyoHS5obTRR9BMY=" crossorigin=""/>
+    <link rel="stylesheet" href="style_rjy.css">
+</head>
+<body>
+      <nav>
+    <div class="logo">MedTech</div>
+    <div class="menu-toggle">☰</div>
+    <ul>
+      <b><li><a href="Home.html">Home</a></li></b>
+      <li><a href="About.html">About</a></li>
+      <li><a href="Medical_Status.html">Medical Status</a></li>
+      <li><a href="Appointment.html">Appointment</a></li>
+      <li><a href="Technology.html">Technology</a></li>
+      <li><a href="index.html">Log Out</a></li>
+    </ul>
+  </nav>
+    <div id="container">
+        <aside id="sidebar">
+            <header>
+                <h1>Rajahmundry Hospitals 🏥</h1>
+                <p>An interactive map of major hospitals in Rajamahendravaram.</p>
+                <input type="text" id="searchBar" placeholder="Search hospitals...">
+            </header>
+            <nav id="filterMenu">
+                <button class="filter-btn active" data-filter="all">All</button>
+                <button class="filter-btn" data-filter="government">Government & Teaching</button>
+                <button class="filter-btn" data-filter="multi-specialty">Multi-Specialty</button>
+                <button class="filter-btn" data-filter="women-child">Women & Child Care</button>
+                <button class="filter-btn" data-filter="eye-ent">Eye & ENT Care</button>
+                <button class="filter-btn" data-filter="orthopaedics">Orthopaedics & Trauma</button>
+                <button class="filter-btn" data-filter="private">Other Private</button>
+            </nav>
+            <div id="hospitalList">
+                </div>
+        </aside>
+        <div id="map"></div>
+    </div>
+    <script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js" integrity="sha256-20nQCchB9co0qIjJZRGuk2/Z9VM+kNiyxNV1lvTlZBo=" crossorigin=""></script>
+    <script src="script_rjy.js"></script>
+</body>
+</html>

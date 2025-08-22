@@ -1,0 +1,491 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Patient Appointment Booking Form</title>
+     <link rel="icon" href="https://res.cloudinary.com/dvzuuabfr/image/upload/v1755880353/Gemini_Generated_Image_679a9u679a9u679a_vx1rlm.png" type="image/jpeg">
+    <!-- Tailwind CSS for styling -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    
+    <!-- Google Fonts: Inter -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+    
+    <!-- Custom CSS for animations, dark soft UI, and additional styles -->
+    <style>
+        body {
+            font-family: 'Inter', sans-serif;
+            background-image: linear-gradient(rgba(28, 37, 41, 0.85), rgba(28, 37, 41, 0.85)), url('https://images.unsplash.com/photo-1576091160550-2173dba999ef?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=2070&q=80');
+            background-size: cover;
+            background-attachment: fixed;
+            background-position: center;
+            color: #e0e5ec;
+        }
+
+        /* --- Navigation Bar --- */
+        nav {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            background: rgba(28, 37, 41, 0.7); /* Frosted glass effect */
+            backdrop-filter: blur(10px);
+            -webkit-backdrop-filter: blur(10px);
+            padding: 1rem 5%;
+            border-bottom: 1px solid rgba(35, 46, 51, 0.5);
+            position: sticky;
+            top: 0;
+            z-index: 1000;
+        }
+        nav .logo { font-size: 1.5rem; font-weight: bold; color: #0d9488; }
+        nav ul { list-style: none; display: flex; gap: 1.5rem; margin: 0; padding: 0; }
+        nav ul li a { text-decoration: none; color: #e0e5ec; font-weight: 500; transition: color 0.3s; }
+        nav ul li a:hover { color: #0d9488; }
+        nav .menu-toggle { display: none; font-size: 1.8rem; color: #fff; cursor: pointer; }
+
+        /* --- Dark Soft UI / Neumorphism --- */
+        .soft-ui-container {
+            background: rgba(76, 127, 149, 0.7); /* Frosted glass effect */
+            backdrop-filter: blur(10px);
+            -webkit-backdrop-filter: blur(10px);
+            border: 1px solid rgba(35, 46, 51, 0.5);
+            border-radius: 20px;
+            box-shadow: 0 8px 32px rgba(0, 0, 0, 0.37);
+            animation: fadeIn 0.8s ease-out forwards;
+        }
+
+        .form-input {
+            background: rgba(21, 28, 31, 0.7);
+            border: 1px solid rgba(35, 46, 51, 0.5);
+            box-shadow: none;
+            transition: all 0.3s ease;
+            color: #e0e5ec;
+        }
+        .form-input:focus {
+            outline: none;
+            border-color: #0d9488;
+            background: rgb(69, 106, 122);
+        }
+        .form-input::placeholder { color: #6b7f87; }
+
+        .soft-btn {
+            color: #e0e5ec;
+            font-weight: bold;
+            background: #0d9488;
+            border-radius: 9999px;
+            box-shadow: 0 4px 15px rgba(48, 149, 141, 0.3);
+            transition: all 0.2s ease-in-out;
+        }
+        .soft-btn:hover { background: #099b4d; box-shadow: 0 6px 20px rgba(13, 148, 80, 0.4); transform: translateY(-2px); }
+        .soft-btn:active { transform: translateY(0); }
+        .soft-btn:disabled { background: #232e33; color: #6b7f87; cursor: not-allowed; box-shadow: none; }
+
+        /* --- Utility & Animation --- */
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(20px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+        .modal-backdrop { background: rgba(0, 0, 0, 0.7); backdrop-filter: blur(5px); }
+        .input-error { border-color: #e53e3e !important; }
+        .error-text { color: #f56565; transition: opacity 0.3s ease; }
+
+        /* --- Custom Scrollbar --- */
+        ::-webkit-scrollbar { width: 8px; }
+        ::-webkit-scrollbar-track { background: #1c2529; }
+        ::-webkit-scrollbar-thumb { background: #232e33; border-radius: 4px; }
+        ::-webkit-scrollbar-thumb:hover { background: #0d9488; }
+        
+        /* --- Loading Dots Animation --- */
+        .loading-dots span {
+            display: inline-block;
+            width: 8px; height: 8px;
+            border-radius: 50%;
+            background-color: #e0e5ec;
+            margin: 0 2px;
+            animation: bounce 1.4s infinite ease-in-out both;
+        }
+        .loading-dots .dot1 { animation-delay: -0.32s; }
+        .loading-dots .dot2 { animation-delay: -0.16s; }
+        @keyframes bounce {
+            0%, 80%, 100% { transform: scale(0); }
+            40% { transform: scale(1.0); }
+        }
+    </style>
+</head>
+<body>
+    <nav>
+        <div class="logo">MedTech RJY</div>
+        <div class="menu-toggle">☰</div>
+        <ul>
+            <li><a href="Home.html">Home</a></li>
+            <li><a href="Medical_Status.html">Medical Status</a></li>
+            <li><a href="Technology.html">Technology</a></li>
+            <li><a href="RJY_Hospital.html">Services Map</a></li>
+            <li><a href="Medical_Status.html">Medical Status</a></li>
+            <li><a href="index.html">Log Out</a></li>
+        </ul>
+    </nav>
+
+    <main class="flex flex-col items-center justify-center p-4 sm:p-8">
+        <!-- Form Container -->
+        <div class="soft-ui-container w-full max-w-4xl p-6 sm:p-8 rounded-2xl">
+            <header class="text-center mb-8">
+                <h1 class="text-3xl sm:text-4xl font-bold tracking-tight text-white">Book an Appointment</h1>
+                <p class="text-gray-400 mt-2">Fill out the form to schedule your visit.</p>
+            </header>
+
+            <form id="appointmentForm" class="space-y-6" novalidate>
+                <!-- Form fields remain the same as the previous version -->
+                <div class="grid grid-cols-1 md:grid-cols-2 gap-x-6 gap-y-2">
+                    <div>
+                        <label for="fullName" class="block text-sm font-semibold mb-1">Full Name</label>
+                        <input type="text" id="fullName" name="fullName" placeholder="e.g., John Doe" class="form-input w-full px-4 py-3 rounded-lg" required>
+                        <span class="error-text text-xs h-4 block"></span>
+                    </div>
+                    <div class="grid grid-cols-2 gap-4">
+                        <div>
+                            <label for="age" class="block text-sm font-semibold mb-1">Age</label>
+                            <input type="number" id="age" name="age" placeholder="e.g., 35" class="form-input w-full px-4 py-3 rounded-lg" required min="0">
+                             <span class="error-text text-xs h-4 block"></span>
+                        </div>
+                        <div>
+                            <label for="gender" class="block text-sm font-semibold mb-1">Gender</label>
+                            <select id="gender" name="gender" class="form-input w-full px-4 py-3 rounded-lg" required>
+                                <option value="" disabled selected>Select</option>
+                                <option value="Male">Male</option>
+                                <option value="Female">Female</option>
+                                <option value="Other">Other</option>
+                            </select>
+                             <span class="error-text text-xs h-4 block"></span>
+                        </div>
+                    </div>
+                </div>
+                <div class="grid grid-cols-1 md:grid-cols-2 gap-x-6 gap-y-2">
+                    <div>
+                        <label for="contactNumber" class="block text-sm font-semibold mb-1">Contact Number</label>
+                        <input type="tel" id="contactNumber" name="contactNumber" placeholder="10-digit mobile number" class="form-input w-full px-4 py-3 rounded-lg" required pattern="[0-9]{10}">
+                        <span class="error-text text-xs h-4 block"></span>
+                    </div>
+                    <div>
+                        <label for="email" class="block text-sm font-semibold mb-1">Email Address</label>
+                        <input type="email" id="email" name="email" placeholder="e.g., john.doe@example.com" class="form-input w-full px-4 py-3 rounded-lg" required>
+                        <span class="error-text text-xs h-4 block"></span>
+                    </div>
+                </div>
+                <div class="grid grid-cols-1 md:grid-cols-2 gap-x-6 gap-y-2">
+                    <div>
+                        <label for="hospital" class="block text-sm font-semibold mb-1">Select Hospital</label>
+                        <select id="hospital" name="hospital" class="form-input w-full px-4 py-3 rounded-lg" required>
+                            <option value="" disabled selected>Choose a hospital</option>
+                        </select>
+                        <p id="hospitalTimings" class="text-xs text-gray-400 mt-2 h-4"></p>
+                        <span class="error-text text-xs h-4 block -mt-4"></span>
+                    </div>
+                    <div>
+                        <label for="department" class="block text-sm font-semibold mb-1">Department / Specialty</label>
+                        <select id="department" name="department" class="form-input w-full px-4 py-3 rounded-lg" required>
+                            <option value="" disabled selected>Select a department</option>
+                            <option value="Cardiology">Cardiology</option>
+                            <option value="Pediatrics">Pediatrics</option>
+                            <option value="Orthopaedics">Orthopaedics</option>
+                            <option value="General Medicine">General Medicine</option>
+                            <option value="ENT">ENT</option>
+                            <option value="Neurology">Neurology</option>
+                            <option value="Ophthalmology">Ophthalmology</option>
+                            <option value="Oncology">Oncology</option>
+                        </select>
+                        <span class="error-text text-xs h-4 block"></span>
+                    </div>
+                </div>
+                <div class="grid grid-cols-1 md:grid-cols-3 gap-x-6 gap-y-2">
+                    <div class="md:col-span-1">
+                        <label for="doctor" class="block text-sm font-semibold mb-1">Doctor Preference</label>
+                        <select id="doctor" name="doctor" class="form-input w-full px-4 py-3 rounded-lg" required>
+                            <option value="" disabled selected>Select department first</option>
+                        </select>
+                        <span class="error-text text-xs h-4 block"></span>
+                    </div>
+                    <div>
+                        <label for="appointmentDate" class="block text-sm font-semibold mb-1">Appointment Date</label>
+                        <input type="date" id="appointmentDate" name="appointmentDate" class="form-input w-full px-4 py-3 rounded-lg" required>
+                        <span class="error-text text-xs h-4 block"></span>
+                    </div>
+                    <div>
+                        <label for="appointmentTime" class="block text-sm font-semibold mb-1">Appointment Time</label>
+                        <input type="time" id="appointmentTime" name="appointmentTime" class="form-input w-full px-4 py-3 rounded-lg" required>
+                        <span class="error-text text-xs h-4 block"></span>
+                    </div>
+                </div>
+                <div>
+                    <label for="symptoms" class="block text-sm font-semibold mb-1">Symptoms / Reason for Visit</label>
+                    <textarea id="symptoms" name="symptoms" rows="4" placeholder="Briefly describe your symptoms..." class="form-input w-full px-4 py-2 rounded-lg" maxlength="500"></textarea>
+                    <p id="charCounter" class="text-right text-xs text-gray-400 mt-1">0 / 500</p>
+                </div>
+                <div class="text-center pt-4">
+                    <button type="submit" class="soft-btn py-3 px-8 w-full sm:w-auto">
+                        Book Appointment
+                    </button>
+                </div>
+            </form>
+        </div>
+
+        <!-- Live Preview Card -->
+        <div id="livePreview" class="soft-ui-container w-full max-w-4xl p-6 rounded-2xl mt-8 hidden">
+            <!-- Content will be generated by JS -->
+        </div>
+    </main>
+
+    <!-- Confirmation Modal -->
+    <div id="confirmationModal" class="fixed inset-0 z-50 flex items-center justify-center p-4 modal-backdrop hidden">
+        <div class="bg-white rounded-lg shadow-xl w-full max-w-md p-6 text-gray-800 transform transition-all scale-95 opacity-0" id="modalContent">
+            <h2 class="text-2xl font-bold mb-4">Confirm Appointment Details</h2>
+            <div id="modalSummary" class="space-y-2 mb-6"></div>
+            <div class="flex justify-end space-x-4">
+                <button id="cancelButton" class="px-4 py-2 bg-gray-200 text-gray-800 rounded-lg hover:bg-gray-300 transition-colors">Cancel</button>
+                <button id="confirmButton" class="px-4 py-2 bg-teal-600 text-white rounded-lg hover:bg-teal-700 transition-colors">Confirm</button>
+            </div>
+        </div>
+    </div>
+    
+    <div id="successMessage" class="fixed top-20 right-5 bg-teal-500 text-white py-2 px-4 rounded-lg shadow-lg opacity-0 transform translate-y-2 transition-all duration-300">
+        Appointment booked successfully!
+    </div>
+
+
+    <script>
+        document.addEventListener('DOMContentLoaded', function() {
+            // --- DATA ---
+            const hospitalData = {
+                "Government & Teaching Hospitals": [
+                    { name: "Government General Hospital", timings: "9 AM–2 PM", emergency: "24/7", opdStart: "09:00", opdEnd: "14:00" },
+                    { name: "RMC Teaching Hospital", timings: "9 AM–1:30 PM", emergency: "24/7", opdStart: "09:00", opdEnd: "13:30" }
+                ],
+                "Multi-Specialty Hospitals": [
+                    { name: "Apollo Hospitals", timings: "9 AM–8 PM", emergency: "24/7", opdStart: "09:00", opdEnd: "20:00" },
+                    { name: "Care Hospitals", timings: "10 AM–7 PM", emergency: "24/7", opdStart: "10:00", opdEnd: "19:00" },
+                    { name: "Medicover Hospitals", timings: "9 AM–9 PM", emergency: "24/7", opdStart: "09:00", opdEnd: "21:00" }
+                ],
+                "Women & Child Care Hospitals": [
+                    { name: "Rainbow Children's Hospital", timings: "9 AM–6 PM", emergency: "24/7", opdStart: "09:00", opdEnd: "18:00" },
+                    { name: "Anu Hospital", timings: "10 AM–5 PM", emergency: "24/7", opdStart: "10:00", opdEnd: "17:00" },
+                    { name: "Motherhood Hospital", timings: "9:30 AM–7 PM", emergency: "24/7", opdStart: "09:30", opdEnd: "19:00" }
+                ],
+                "Eye & ENT Care": [
+                    { name: "Vasan Eye Care", timings: "9 AM–8 PM", emergency: "N/A", opdStart: "09:00", opdEnd: "20:00" },
+                    { name: "Dr. Agarwal’s Eye Hospital", timings: "9 AM–7 PM", emergency: "N/A", opdStart: "09:00", opdEnd: "19:00" },
+                    { name: "LV Prasad Eye Institute", timings: "8 AM–5 PM", emergency: "24/7", opdStart: "08:00", opdEnd: "17:00" }
+                ],
+                 "Orthopaedics & Specialty": [
+                    { name: "KIMS ICON Hospital", timings: "9 AM–6 PM", emergency: "24/7", opdStart: "09:00", opdEnd: "18:00" },
+                    { name: "Sri Sathya Sai Ortho Hospital", timings: "10 AM–4 PM", emergency: "24/7", opdStart: "10:00", opdEnd: "16:00" },
+                    { name: "City Cancer Centre", timings: "9 AM–5 PM", emergency: "24/7", opdStart: "09:00", opdEnd: "17:00" }
+                ],
+                "Other Private Hospitals": [
+                    { name: "Metro Hospitals", timings: "10 AM–8 PM", emergency: "24/7", opdStart: "10:00", opdEnd: "20:00" },
+                    { name: "St. Ann’s Hospital", timings: "9 AM–5 PM", emergency: "24/7", opdStart: "09:00", opdEnd: "17:00" },
+                    { name: "Aditya Multispeciality Hospital", timings: "9 AM–9 PM", emergency: "24/7", opdStart: "09:00", opdEnd: "21:00" }
+                ]
+            };
+            const doctorData = {
+                "Cardiology": ["Dr. Evelyn Reed", "Dr. Marcus Thorne", "Dr. Lena Petrova"],
+                "Pediatrics": ["Dr. Samuel Green", "Dr. Chloe Adams"],
+                "Orthopaedics": ["Dr. Benjamin Carter", "Dr. Sofia Rossi", "Dr. Kenji Tanaka"],
+                "General Medicine": ["Dr. Alice Johnson", "Dr. Robert White"],
+                "ENT": ["Dr. Olivia Chen", "Dr. David Lee"],
+                "Neurology": ["Dr. Isaac Williams", "Dr. Fatima Ahmed"],
+                "Ophthalmology": ["Dr. Henry Wilson", "Dr. Isabella Garcia"],
+                "Oncology": ["Dr. Grace Miller", "Dr. James Brown"]
+            };
+
+            // --- DOM ELEMENTS ---
+            const form = document.getElementById('appointmentForm');
+            const hospitalSelect = document.getElementById('hospital');
+            const departmentSelect = document.getElementById('department');
+            const doctorSelect = document.getElementById('doctor');
+            const hospitalTimingsP = document.getElementById('hospitalTimings');
+            const symptomsTextarea = document.getElementById('symptoms');
+            const charCounter = document.getElementById('charCounter');
+            const modal = document.getElementById('confirmationModal');
+            const modalContent = document.getElementById('modalContent');
+            const modalSummary = document.getElementById('modalSummary');
+            const cancelButton = document.getElementById('cancelButton');
+            const confirmButton = document.getElementById('confirmButton');
+            const successMessage = document.getElementById('successMessage');
+            const livePreview = document.getElementById("livePreview");
+            const appointmentDateInput = document.getElementById('appointmentDate');
+
+            // --- INITIALIZATION ---
+            (function populateHospitals() {
+                for (const group in hospitalData) {
+                    const optgroup = document.createElement('optgroup');
+                    optgroup.label = group;
+                    hospitalData[group].forEach(hospital => {
+                        const option = document.createElement('option');
+                        option.value = hospital.name;
+                        option.textContent = hospital.name;
+                        option.dataset.timings = `OPD: ${hospital.timings}, Emergency: ${hospital.emergency}`;
+                        option.dataset.opdStart = hospital.opdStart;
+                        option.dataset.opdEnd = hospital.opdEnd;
+                        optgroup.appendChild(option);
+                    });
+                    hospitalSelect.appendChild(optgroup);
+                }
+            })();
+            
+            appointmentDateInput.setAttribute('min', new Date().toISOString().split('T')[0]);
+
+            // --- EVENT LISTENERS ---
+            hospitalSelect.addEventListener('change', e => {
+                const selected = e.target.options[e.target.selectedIndex];
+                if (!selected.value) {
+                    hospitalTimingsP.textContent = '';
+                    return;
+                };
+
+                let now = new Date();
+                let hours = now.getHours().toString().padStart(2,"0") + ":" + now.getMinutes().toString().padStart(2,"0");
+                let status = (hours >= selected.dataset.opdStart && hours <= selected.dataset.opdEnd) 
+                    ? "<span class='text-green-400'>● OPD Open Now</span>" 
+                    : "<span class='text-red-400'>● OPD Closed Now</span>";
+                
+                hospitalTimingsP.innerHTML = `${selected.dataset.timings} | ${status}`;
+            });
+
+            departmentSelect.addEventListener('change', e => populateDoctors(e.target.value));
+            symptomsTextarea.addEventListener('input', e => charCounter.textContent = `${e.target.value.length} / 500`);
+            form.addEventListener('submit', e => { e.preventDefault(); if (validateForm()) showModal(); });
+            cancelButton.addEventListener('click', hideModal);
+            modal.addEventListener('click', e => { if (e.target === modal) hideModal(); });
+            
+            confirmButton.addEventListener('click', () => {
+                confirmButton.innerHTML = `Booking <span class="loading-dots"><span class="dot1"></span><span class="dot2"></span><span class="dot3"></span></span>`;
+                confirmButton.disabled = true;
+
+                setTimeout(() => {
+                    confirmButton.innerHTML = "Confirm";
+                    confirmButton.disabled = false;
+                    hideModal();
+                    showSuccessMessage();
+                    form.reset();
+                    livePreview.classList.add("hidden");
+                    hospitalTimingsP.textContent = '';
+                    charCounter.textContent = '0 / 500';
+                    populateDoctors('');
+                }, 2000); // Simulate network delay
+            });
+
+            form.addEventListener("input", () => {
+                let name = form.fullName.value || "Not Provided";
+                let hospital = hospitalSelect.value || "Not Selected";
+                let dept = departmentSelect.value || "Not Selected";
+                let date = form.appointmentDate.value || "Not Selected";
+                let time = form.appointmentTime.value || "Not Selected";
+
+                livePreview.innerHTML = `
+                    <h3 class="text-lg font-bold text-white mb-2">📝 Live Preview</h3>
+                    <div class="text-gray-300 space-y-1">
+                        <p><b>Name:</b> ${name}</p>
+                        <p><b>Hospital:</b> ${hospital}</p>
+                        <p><b>Department:</b> ${dept}</p>
+                        <p><b>Date & Time:</b> ${date} at ${time}</p>
+                    </div>
+                `;
+                livePreview.classList.remove("hidden");
+            });
+
+            // --- FUNCTIONS ---
+            function populateDoctors(department) {
+                doctorSelect.innerHTML = '';
+                if (department && doctorData[department]) {
+                    let defaultOption = new Option('Select a doctor', '', true, true);
+                    defaultOption.disabled = true;
+                    doctorSelect.appendChild(defaultOption);
+                    doctorData[department].forEach(name => doctorSelect.appendChild(new Option(name, name)));
+                } else {
+                    let defaultOption = new Option('Select department first', '', true, true);
+                    defaultOption.disabled = true;
+                    doctorSelect.appendChild(defaultOption);
+                }
+            }
+
+            function validateForm() {
+                clearErrors();
+                let isValid = true;
+                
+                form.querySelectorAll('[required]').forEach(input => {
+                    if (!input.value.trim()) {
+                        showError(input, `${input.labels[0].textContent} is required.`);
+                        isValid = false;
+                    }
+                });
+
+                const emailInput = document.getElementById('email');
+                if (emailInput.value && !/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(emailInput.value)) {
+                    showError(emailInput, 'Please enter a valid email address.');
+                    isValid = false;
+                }
+
+                const contactInput = document.getElementById('contactNumber');
+                if (contactInput.value && !/^[0-9]{10}$/.test(contactInput.value)) {
+                    showError(contactInput, 'Please enter a valid 10-digit phone number.');
+                    isValid = false;
+                }
+                
+                if (new Date(appointmentDateInput.value).getDay() === 0) {
+                     showError(appointmentDateInput, "Appointments are not available on Sundays.");
+                     isValid = false;
+                }
+
+                const timeInput = document.getElementById('appointmentTime');
+                const selectedHospitalOption = hospitalSelect.options[hospitalSelect.selectedIndex];
+                if (timeInput.value && selectedHospitalOption.value) {
+                    const { opdStart, opdEnd } = selectedHospitalOption.dataset;
+                    if (timeInput.value < opdStart || timeInput.value > opdEnd) {
+                        showError(timeInput, `Time must be between ${opdStart} and ${opdEnd}.`);
+                        isValid = false;
+                    }
+                }
+                return isValid;
+            }
+
+            function showError(input, message) {
+                input.classList.add('input-error');
+                const errorSpan = input.nextElementSibling;
+                if (errorSpan && errorSpan.classList.contains('error-text')) {
+                    errorSpan.textContent = message;
+                }
+            }
+
+            function clearErrors() {
+                document.querySelectorAll('.form-input').forEach(input => input.classList.remove('input-error'));
+                document.querySelectorAll('.error-text').forEach(span => span.textContent = '');
+            }
+
+            function showModal() {
+                const formData = new FormData(form);
+                let summaryHtml = '';
+                formData.forEach((value, key) => {
+                    if (value) {
+                        const label = form.querySelector(`[name=${key}]`).labels[0].textContent;
+                        summaryHtml += `<p><strong class="font-semibold text-gray-600">${label}:</strong> ${value}</p>`;
+                    }
+                });
+                modalSummary.innerHTML = summaryHtml;
+                modal.classList.remove('hidden');
+                setTimeout(() => modalContent.classList.remove('scale-95', 'opacity-0'), 10);
+            }
+
+            function hideModal() {
+                modalContent.classList.add('scale-95', 'opacity-0');
+                setTimeout(() => modal.classList.add('hidden'), 200);
+            }
+            
+            function showSuccessMessage() {
+                successMessage.classList.remove('opacity-0', 'translate-y-2');
+                setTimeout(() => successMessage.classList.add('opacity-0', 'translate-y-2'), 3000);
+            }
+        });
+    </script>
+</body>
+</html>
